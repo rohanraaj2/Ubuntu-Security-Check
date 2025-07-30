@@ -1,0 +1,31 @@
+#!/bin/bash
+
+echo "🔐 Ubuntu Minimal Security Audit"
+echo "--------------------------------"
+
+echo -n "Auto-login: "
+if grep -q "AutomaticLoginEnable=true" /etc/gdm3/custom.conf; then
+    echo "❌ ENABLED (not secure)"
+else
+    echo "✅ Disable"
+fi
+
+echo -n "UFW Firewall: "
+sudo ufw status | grep -q "Status: active" && echo "✅ Active" || echo "❌ Inactive"
+
+echo -n "Screen Lock (idle): "
+gsettings get org.gnome.desktop.screensaver lock-enabled | grep -q true && echo "✅ Enabled" || echo "❌ Disabled"
+
+echo "Checking for updates..."
+sudo apt list --upgradable 2>/dev/null | grep -q "upgradable" && echo "❌ Updates available" || echo "✅ System is up to date"
+
+echo -n "Sudo Users: "
+getent group sudo | cut -d: -f4
+
+echo -n "GNOME Keyring status: "
+[ -f ~/.local/share/keyrings/login.keyring ] && echo "✅ Found" || echo "❌ Not Found"
+
+echo -n "Disk Encryption: "
+lsblk -o NAME,TYPE | grep -q "crypt" && echo "✅ Encrypted" || echo "❌ Not Encrypted"
+
+echo "---------
