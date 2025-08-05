@@ -1,4 +1,4 @@
-# Ubuntu Minimal Security Audit
+# Ubuntu Security Audit
 
 This project provides a simple Bash script to perform a minimal security audit on Ubuntu systems. The script checks for several basic security settings and configurations to help users quickly assess their system's security posture.
 
@@ -31,5 +31,28 @@ The script will print a summary of each security check, indicating whether each 
 ## Disclaimer
 This script provides a minimal and basic security audit. For comprehensive security, consider using more advanced tools and following best practices for system hardening.
 
-## License
-MIT License
+# ClamAV Weekly Scan
+
+This includes a script to perform a weekly malware scan using ClamAV.
+
+### Features
+- Scans the `~/Downloads` and `~/Documents` directories for malware.
+- Updates ClamAV virus definitions before scanning.
+- Logs scan results to a dated log file in your home directory.
+- Notifies you if any threats are found (with optional desktop notification).
+
+### Usage
+1. Ensure ClamAV is installed:
+   ```bash
+   sudo apt update && sudo apt install clamav clamav-daemon
+   ```
+2. Run the script:
+   ```bash
+   bash clamav-weekly-scan.sh
+   ```
+   > **Note:** You may be prompted for your password to update virus definitions.
+
+### Requirements
+- ClamAV (`clamav`, `clamav-daemon`)
+- Bash shell
+- (Optional) `notify-send` for desktop notifications
